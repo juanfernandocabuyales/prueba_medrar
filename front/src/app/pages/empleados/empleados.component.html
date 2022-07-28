@@ -1,0 +1,24 @@
+<div class="text-center mt-5">
+    <h3> Listado de Empleados</h3>
+</div>
+
+<div class="container mt-5">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Nombre</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let empleado of empleadosList">
+                <td>{{empleado.empleadoId}}</td>
+                <td>{{empleado.empleadoNombre}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="text-center mt-5">
+        <button type="button" class="btn btn-info btn-lg" (click)="navegarPagina()">Actividades</button>
+    </div>
+</div>

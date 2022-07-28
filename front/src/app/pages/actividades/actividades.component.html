@@ -1,0 +1,75 @@
+<div class="text-center mt-5">
+    <h3> Listado de Actividades</h3>
+</div>
+
+<div class="container mt-5">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Fecha - Hora</th>
+                <th scope="col">Empleado</th>
+                <th scope="col">Días Atraso</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let actividad of actividadesList">
+                <td>{{actividad.actividadId}}</td>
+                <td>{{actividad.actividadNombre}}</td>
+                <td>{{actividad.actividadEstado}}</td>
+                <td>{{actividad.actividadFecha}}</td>
+                <td>{{actividad.actividadEmpleado?.empleadoNombre}}</td>
+                <td>{{actividad.diasAtraso}}</td>
+                <td>
+                    <button type="button" class="btn btn-success" (click)="editarActividad(actividad)">Editar</button>
+                    <button type="button" class="btn btn-danger ml-2" (click)="eliminarActividad(actividad)">Eliminar</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="text-center mt-5">
+        <button type="button" class="btn btn-primary btn-lg" (click)="mostrarFormulario()">Crear Actividad</button>
+        <button type="button" class="btn btn-info btn-lg ml-3" (click)="navegarPagina()">Empleados</button>
+    </div>
+
+
+</div>
+
+<div class="container mt-5 mb-5" *ngIf="creacion || editar">
+    <form [formGroup]="form" *ngIf="isForm | async as isForm;">
+        <div class="form-group">
+            <label for="nombre">Nombre</label>
+            <input type="text" class="form-control" formControlName="nombre" id="nombre">
+            <small class="ng-dirty ng-invalid" *ngIf="submitted && !form.controls['nombre'].valid">Se requiere un nombre valido</small>
+        </div>
+        <div class="form-group">
+            <label for="estado">Estado</label>
+            <select class="form-control" formControlName="estado" id="estado">
+                <option [value]="null"> -- Seleccione un estado -- </option>
+                <option value="COMPLETA"> Completa</option>
+                <option value="PENDIENTE"> Pendiente</option>
+            </select>
+            <small class="ng-dirty ng-invalid" *ngIf="submitted && !form.controls['estado'].valid">Se requiere un estado valido</small>
+        </div>
+        <div class="form-group">
+            <label for="fecha">Fecha</label>
+            <input type="datetime-local" class="form-control" formControlName="fecha" id="fecha">
+            <small class="ng-dirty ng-invalid" *ngIf="submitted && !form.controls['fecha'].valid">Se requiere una fecha valida</small>
+        </div>
+        <div class="form-group">
+            <label for="empleado">Empleado</label>
+            <select class="form-control" formControlName="empleado" id="empleado">
+                <option [value]="null"> -- Seleccione un empleado -- </option>
+                <option *ngFor="let empleado of empleadosList" [value]="empleado.empleadoId">{{empleado.empleadoNombre}}</option>
+            </select>
+            <small class="ng-dirty ng-invalid" *ngIf="submitted && !form.controls['empleado'].valid">Se requiere un empleado valido</small>
+        </div>
+        <div class="text-center mt-5">
+            <button type="button" class="btn btn-primary btn-lg" (click)="validarOperacion()">{{ editar ? 'Editar Actividad': 'Crear Actividad'}} </button>
+        </div>
+    </form>
+</div>
